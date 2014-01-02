@@ -18,7 +18,7 @@ export CROSS_COMPILE=/home/dave/toolchain/arm-eabi-4.4.3/bin/arm-eabi-
 # make zImage
 ##############################################################################
 mkdir -p ./obj/KERNEL_OBJ/
-make O=./obj/KERNEL_OBJ/ m470_defconfig
+make O=./obj/KERNEL_OBJ/ taktik_m470_defconfig
 make -j12 O=./obj/KERNEL_OBJ/
 
 ##############################################################################

@@ -230,9 +230,9 @@ struct rcu_data {
 					/*  in order to detect GP end. */
 	unsigned long	gpnum;		/* Highest gp number that this CPU */
 					/*  is aware of having started. */
-	unsigned long	passed_quiesce_gpnum;
-					/* gpnum at time of quiescent state. */
-	bool		passed_quiesce;	/* User-mode/idle loop etc. */
+	unsigned long	passed_quiesc_completed;
+					/* Value of completed at time of qs. */
+	bool		passed_quiesc;	/* User-mode/idle loop etc. */
 	bool		qs_pending;	/* Core waits for quiesc state. */
 	bool		beenonline;	/* CPU online at least once. */
 	bool		preemptible;	/* Preemptible RCU? */
@@ -299,7 +299,6 @@ struct rcu_data {
 	unsigned long n_rp_need_nothing;
 
 	int cpu;
-	struct rcu_state *rsp;
 };
 
 /* Values for signaled field in struct rcu_state. */
@@ -431,7 +430,7 @@ static void rcu_report_unblock_qs_rnp(struct rcu_node *rnp,
 static void rcu_stop_cpu_kthread(int cpu);
 #endif /* #ifdef CONFIG_HOTPLUG_CPU */
 static void rcu_print_detail_task_stall(struct rcu_state *rsp);
-static int rcu_print_task_stall(struct rcu_node *rnp);
+static void rcu_print_task_stall(struct rcu_node *rnp);
 static void rcu_preempt_stall_reset(void);
 static void rcu_preempt_check_blocked_tasks(struct rcu_node *rnp);
 #ifdef CONFIG_HOTPLUG_CPU

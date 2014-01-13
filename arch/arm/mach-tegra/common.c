@@ -564,7 +564,7 @@ static int __init tegra_wifi_addr_arg(char *info)
 {
 	char *p = info;
         memcpy(his_wifi_addr, p, 18);
-        printk("wangyongqing-common: wifi = %s\n", his_wifi_addr);
+        //printk("wangyongqing: wifi = %s\n", his_wifi_addr);
 	return 0;
 }
 early_param("wifiaddr", tegra_wifi_addr_arg);
@@ -573,7 +573,7 @@ static int __init tegra_bt_addr_arg(char *info)
 {
 	char *p = info;
         memcpy(his_bt_addr, p, 18);
-        printk("wangyongqing: bt = %s\n", his_bt_addr);
+        //printk("wangyongqing: bt = %s\n", his_bt_addr);
 	return 0;
 }
 early_param("btaddr", tegra_bt_addr_arg);

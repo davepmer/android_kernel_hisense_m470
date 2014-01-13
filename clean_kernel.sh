@@ -11,10 +11,9 @@ make O=./obj/KERNEL_OBJ/ clean
 if [ -f ./zImage ]
 then
     rm ./zImage
-    rm ./log
 fi
 
 if [ -d ./obj/ ]
 then
-    rm -r ./obj/
+    rm -r ./obj/*
 fi

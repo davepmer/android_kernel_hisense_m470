@@ -41,6 +41,7 @@
 #define ENTERPRISE_WLAN_WOW	TEGRA_GPIO_WLAN_HOST_WAKE
 #define ENTERPRISE_SD_CD TEGRA_GPIO_PI5
 #define MAC_ADDR_LEN		6
+/* #define CONFIG_DAVE             y */
 
 static void (*wifi_status_cb)(int card_present, void *dev_id);
 static void *wifi_status_cb_devid;
@@ -49,7 +50,6 @@ static int enterprise_wifi_status_register(void (*callback)(int , void *), void 
 static int enterprise_wifi_reset(int on);
 static int enterprise_wifi_power(int on);
 static int enterprise_wifi_set_carddetect(int val);
-static int enterprise_wifi_get_mac_addr(unsigned char *buf);
 extern unsigned int his_hw_ver;
 extern unsigned int his_board_version;
 extern char his_wifi_addr[18];
@@ -58,7 +58,6 @@ static struct wifi_platform_data enterprise_wifi_control = {
 	.set_power      = enterprise_wifi_power,
 	.set_reset      = enterprise_wifi_reset,
 	.set_carddetect = enterprise_wifi_set_carddetect,
-	.get_mac_addr = enterprise_wifi_get_mac_addr,
 };
 
 static struct wl12xx_platform_data enterprise_wl12xx_wlan_data __initdata = {
@@ -292,7 +291,7 @@ static int enterprise_wifi_reset(int on)
 	return 0;
 }
 
-static int enterprise_wifi_get_mac_addr(unsigned char *buf)
+/* static int enterprise_wifi_get_mac_addr(unsigned char *buf)
 {
 	//struct file *filp=NULL;
 	//struct inode *inode;
@@ -308,11 +307,11 @@ static int enterprise_wifi_get_mac_addr(unsigned char *buf)
 	char mac_valid;
 	uint rand_mac;
 	//char iovbuf[MAC_ADDR_LEN];
-	printk("MAC : mac addr %s \n",his_wifi_addr);
+	//printk("liuqiang : custom mac addr %s \n",his_wifi_addr);
 
+	memcpy(readbuf,his_wifi_addr ,18);
 
-	memcpy(readbuf,his_wifi_addr,18);
-
+	//printk("wangyongqing-sdhci: wifi = %s\n", his_wifi_addr);
 	for(i = 0; i < (MAC_ADDR_LEN*2+5); i++){
 		if(readbuf[i] == ':')
 			continue;
@@ -321,7 +320,7 @@ static int enterprise_wifi_get_mac_addr(unsigned char *buf)
 		else if((readbuf[i] >= 65)&&(readbuf[i] <= 70))
 			readbuf[i] -= 55;
 		else
-			printk("randomblame - possible mac problem");
+			goto macerr;
 		tmp[ii] = readbuf[i];
 		ii++;
 	}
@@ -334,9 +333,55 @@ static int enterprise_wifi_get_mac_addr(unsigned char *buf)
 		printk("buf[%d]=0x%02x\n", i, buf[i]);
 	}
 
-	printk("randomblame - rahaha \n");
-		return 0;
-}
+	if((!mac_valid)||((buf[0] == 0xFE)&&(buf[1] == 0xFF)&&(buf[2] == 0xFE)&&
+					  (buf[3] == 0xFF)&&(buf[4] == 0xFE)&&(buf[5] == 0xFF)))
+		goto macerr;
+	else
+		goto exit;
+
+macerr:
+
+*/
+	/* Generate random MAC address */
+/*
+ 
+	srandom32((uint)jiffies);
+	rand_mac = random32();
+	buf[0] = 0x00;
+	buf[1] = 0x1A;
+	buf[2] = 0x99;
+	buf[3] = 0xB9;
+	buf[4] = 0x69;
+	buf[5] = 0x5F;
+
+
+#ifndef CONFIG_DAVE
+
+	printk("[DHD]: MAC is invalid, use random MAC address!\n");
+
+	srandom32((uint)jiffies);
+	rand_mac = random32();
+	buf[0] = 0x00;
+	buf[1] = 0x34;
+	buf[2] = 0x9a;
+	buf[3] = (unsigned char)(rand_mac & 0x0F) | 0xF0;
+	buf[4] = (unsigned char)(rand_mac >> 8);
+	buf[5] = (unsigned char)(rand_mac >> 16);
+#endif
+*/
+	//for(i = 0; i <MAC_ADDR_LEN; i++){
+ 	//	printk("buf[%d]=0x%02x\n", i, buf[i]);
+ 	//}
+
+/*
+ exit: */
+ 	/* close file before return */
+	//filp_close(filp, current->files);
+ 	/* restore previous address limit */
+	//set_fs(old_fs);
+/*
+ 	return 0;
+} */
 #ifdef CONFIG_TEGRA_PREPOWER_WIFI
 static int __init enterprise_wifi_prepower(void)
 {

@@ -218,12 +218,6 @@ config MACH_M470
 	   help
          Support for Hisense M470 development platform
 
-config MACH_DAVE
-       bool "M470 board"
-       depends on MACH_TEGRA_ENTERPRISE
-	   help
-         Support for Hisense M470 development platform
-
 config BOARD_M470
        bool "M470"
        depends on MACH_M470

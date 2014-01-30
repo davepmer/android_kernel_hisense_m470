@@ -9,11 +9,13 @@ ccflags-y := -Idrivers/scsi
 
 obj-$(CONFIG_USB_UAS)		+= uas.o
 obj-$(CONFIG_USB_STORAGE)	+= usb-storage.o
+# obj-$(CONFIG_USB)		+= usb-storage.o
 
 usb-storage-y := scsiglue.o protocol.o transport.o usb.o
 usb-storage-y += initializers.o sierra_ms.o option_ms.o
 
 usb-storage-$(CONFIG_USB_STORAGE_DEBUG) += debug.o
+obj-$(CONFIG_USB)		+= debug.o
 
 ifeq ($(CONFIG_USB_LIBUSUAL),)
 	usb-storage-y		+= usual-tables.o

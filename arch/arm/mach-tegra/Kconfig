@@ -218,12 +218,6 @@ config MACH_M470
 	   help
          Support for Hisense M470 development platform
 
-config MACH_DAVE
-       bool "M470 board"
-       depends on MACH_TEGRA_ENTERPRISE
-	   help
-         Support for Hisense M470 development platform
-
 config BOARD_M470
        bool "M470"
        depends on MACH_M470
@@ -303,6 +297,20 @@ config MACH_KAI
        select MACH_HAS_SND_SOC_TEGRA_RT5640 if SND_SOC
        help
          Support for NVIDIA KAI development platform
+
+config TEGRA_GPU_OVERCLOCK
+        bool "Tegra3 GPU Overclocking"
+        depends on ARCH_TEGRA_3x_SOC
+        default n
+        help
+         Tegra3 GPU overclocking
+
+config TEGRA_CPU_OVERCLOCK
+       bool "Tegra3 CPU Overclocking"
+       depends on ARCH_TEGRA_3x_SOC
+       default y
+       help
+         Tegra3 CPU overclocking
 
 choice
        prompt "Tegra platform type"

@@ -18,7 +18,7 @@ export CROSS_COMPILE=/home/dave/toolchain/arm-eabi-4.7/bin/arm-eabi-
 # make zImage
 ##############################################################################
 mkdir -p ./obj/KERNEL_OBJ/
-make O=./obj/KERNEL_OBJ/ dave_m470_defconfig
+make O=./obj/KERNEL_OBJ/ dave-multrom_m470_defconfig
 make -j6 O=./obj/KERNEL_OBJ/ 2>&1 | tee log.txt
 
 ##############################################################################

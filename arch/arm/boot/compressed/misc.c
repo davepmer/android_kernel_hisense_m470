@@ -18,14 +18,16 @@
 
 unsigned int __machine_arch_type;
 
+#include <linux/stddef.h>
 #include <linux/compiler.h>	/* for inline */
 #include <linux/types.h>
 #include <linux/linkage.h>
 #include <asm/setup.h>
+#include <asm/posix_types.h>
 
 static void putstr(const char *ptr);
 extern void error(char *x);
-
+extern void * memcpy(void *, const void *, __kernel_size_t);
 #include <mach/uncompress.h>
 
 #ifdef CONFIG_DEBUG_ICEDCC

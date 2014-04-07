@@ -54,10 +54,6 @@ module_param(no_lp, bool, 0644);
 static unsigned long up2gn_delay;
 static unsigned long up2g0_delay;
 static unsigned long down_delay;
-void set_up2g0_delay(int delay)
-{
-	up2g0_delay = msecs_to_jiffies(delay?UP2G0_DELAY_MS:0);
-}
 module_param(up2gn_delay, ulong, 0644);
 module_param(up2g0_delay, ulong, 0644);
 module_param(down_delay, ulong, 0644);
@@ -352,20 +348,11 @@ static void tegra_auto_hotplug_work_func(struct work_struct *work)
 	}
 	mutex_unlock(tegra3_cpu_lock);
 
-	/* Ignore hotplug during shutdown. This prevents us doing
-	* work that can fail.
-	*/
-	if (system_state <= SYSTEM_RUNNING && cpu < nr_cpu_ids) {
-		if (up){
-			printk(KERN_INFO "cpu_up(%u)+\n",cpu);
+	if (cpu < nr_cpu_ids) {
+		if (up)
 			cpu_up(cpu);
-			printk(KERN_INFO "cpu_up(%u)-\n",cpu);
-		}
-		else{
-			printk(KERN_INFO "cpu_down(%u)+\n",cpu);
+		else
 			cpu_down(cpu);
-			printk(KERN_INFO "cpu_down(%u)-\n",cpu);
-		}
 	}
 }
 

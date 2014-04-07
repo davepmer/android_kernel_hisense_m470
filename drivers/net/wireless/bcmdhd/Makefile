@@ -6,7 +6,7 @@ DHDCFLAGS = -Wall -Wstrict-prototypes -Dlinux -DBCMDRIVER                     \
 	-DCUSTOMER_HW2    \
 	-DMMC_SDIO_ABORT -DBCMSDIO -DBCMLXSDMMC -DBCMPLATFORM_BUS -DWLP2P     \
 	-DNEW_COMPAT_WIRELESS -DWIFI_ACT_FRAME -DARP_OFFLOAD_SUPPORT          \
-	-DKEEP_ALIVE -DPKT_FILTER_SUPPORT    \
+	-DKEEP_ALIVE -DPKT_FILTER_SUPPORT     \
 	-DEMBEDDED_PLATFORM           \
 	-Idrivers/net/wireless/bcmdhd -Idrivers/net/wireless/bcmdhd/include
 
@@ -56,7 +56,7 @@ DHDCFLAGS += -DSOFTAP -DWL_WIRELESS_EXT
 endif
 
 ifneq ($(CONFIG_CFG80211),)
-bcmdhd-objs += wl_cfg80211.o wl_cfgp2p.o dhd_linux_mon.o
+bcmdhd-objs += wl_cfg80211.o wl_cfgp2p.o wl_linux_mon.o
 DHDCFLAGS += -DWL_CFG80211
 DHDCFLAGS += -DCUSTOM_ROAM_TRIGGER_SETTING=-65
 DHDCFLAGS += -DCUSTOM_ROAM_DELTA_SETTING=15
